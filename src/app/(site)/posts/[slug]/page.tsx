@@ -3,25 +3,38 @@ import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
+// export async function generateStaticParams() {
+//   const res = await client.getEntries<Post>({
+//     content_type: "blogPost",
+//   });
+
+//   return res.items.map((post) => ({
+//     // params: {
+//       slug: post.fields.slug,
+//     // },
+//   }));
+// }
+
+type PageProps  = {
+  params: {
+    slug: string;
+  };
+};
+
 export async function generateStaticParams() {
   const res = await client.getEntries<Post>({
     content_type: "blogPost",
   });
 
   return res.items.map((post) => ({
-    // params: {
-      slug: post.fields.slug,
-    // },
+    slug: post.fields.slug,
   }));
 }
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
 
-export default async function Page({ params }: Props) {
+
+
+export default async function Page({ params }: PageProps) {
   const { slug } = params;
 
   const res = await client.getEntries<Post>({
