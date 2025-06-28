@@ -2,6 +2,7 @@ import { Post } from "@/lib/types/post";
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import Image from "next/image";
 
 interface PageProps {
   params: {
@@ -9,7 +10,6 @@ interface PageProps {
   };
 }
 
-// ✅ Dit is de correcte syntax in TypeScript + Next.js 13+ (App Router)
 export default async function Page({ params }: PageProps) {
   const { slug } = params;
 
@@ -29,9 +29,11 @@ export default async function Page({ params }: PageProps) {
       <h1 className="text-4xl font-bold mb-4">{title}</h1>
       <p className="text-gray-500 mb-4">{publishDate}</p>
       {image && (
-        <img
+        <Image
           src={`https:${image.fields.file.url}`}
           alt={title}
+          width={800}
+          height={400}
           className="w-full mb-6 rounded"
         />
       )}
