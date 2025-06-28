@@ -11,17 +11,17 @@ type Props = {
   };
 };
 
-export async function generateStaticParams() {
-  const res = await client.getEntries<Post>({
-    content_type: "blogPost",
-  });
+// export async function generateStaticParams() {
+//   const res = await client.getEntries<Post>({
+//     content_type: "blogPost",
+//   });
 
-  return res.items.map((post) => ({
-    // params: {
-      slug: post.fields.slug,
-    // },
-  }));
-}
+//   return res.items.map((post) => ({
+//     // params: {
+//       slug: post.fields.slug,
+//     // },
+//   }));
+// }
 
 
 export default async function Page({ params }: Props) {
