@@ -1,3 +1,4 @@
+import { Metadata } from "next";
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
@@ -14,13 +15,8 @@ async function getPostBySlug(slug: string) {
   return res.items[0];
 }
 
-interface PageProps {
-  readonly params: {
-    slug: string;
-  };
-}
-
-export default async function Page({ params }: PageProps) {
+// ✅ Hier typ je direct met { params: { slug: string } }
+export default async function Page({ params }: { params: { slug: string } }) {
   const post = await getPostBySlug(params.slug);
 
   if (!post) notFound();
