@@ -2,6 +2,7 @@ import client from "@/lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import { Document } from "@contentful/rich-text-types";
 import Link from "next/link";
+import Image from 'next/image';
 
 type Post = {
   sys: { id: string };
@@ -43,11 +44,19 @@ export default async function Page() {
             </p>
 
             {post.fields.image && (
-              <img
-                src={"https:" + post.fields.image.fields.file.url}
-                alt={post.fields.title}
-                style={{ maxWidth: "400px", height: "auto" }}
-              />
+              // <img
+              //   src={"https:" + post.fields.image.fields.file.url}
+              //   alt={post.fields.title}
+              //   style={{ maxWidth: "400px", height: "auto" }}
+              // />
+
+              <Image
+  src={"https:" + post.fields.image.fields.file.url}
+  alt={post.fields.title}
+  width={600}
+  height={400}
+  style={{ objectFit: 'contain' }}
+/>
             )}
 
             {post.fields.content && (
