@@ -1,10 +1,9 @@
-import { Metadata } from "next";
+// src/app/(site)/posts/[slug]/page.tsx
 import { Post } from "@/lib/types/post";
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
-// Next.js expects a specific `PageProps` structure here
 interface PageProps {
   params: {
     slug: string;
