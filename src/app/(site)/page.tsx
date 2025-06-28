@@ -1,6 +1,6 @@
 import client from "@/lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { BLOCKS, Document } from "@contentful/rich-text-types";
+import { Document } from "@contentful/rich-text-types";
 import Link from "next/link";
 
 type Post = {
