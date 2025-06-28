@@ -1,4 +1,3 @@
-// src/app/(site)/posts/[slug]/page.tsx
 import { Post } from "@/lib/types/post";
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
@@ -10,6 +9,7 @@ interface PageProps {
   };
 }
 
+// ✅ Dit is de correcte syntax in TypeScript + Next.js 13+ (App Router)
 export default async function Page({ params }: PageProps) {
   const { slug } = params;
 
