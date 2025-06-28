@@ -3,14 +3,8 @@ import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 
-// ✅ Type definitie voor de props
-type PageProps = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function Page({ params }: PageProps) {
+// ✅ Dit werkt direct zonder extra typefouten
+export default async function Page({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
   const res = await client.getEntries<Post>({
