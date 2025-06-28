@@ -2,11 +2,6 @@ import client from '@/lib/contentful';
 import Link from 'next/link';
 import { Post } from '@/lib/types/post';
 
-export const metadata = {
-  title: 'Blog overzicht - Mijn Blog',
-  description: 'Lees de nieuwste blogposts over interessante onderwerpen.',
-};
-
 async function getPosts() {
   const response = await client.getEntries<Post>({
     content_type: 'blogPost',

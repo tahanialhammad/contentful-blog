@@ -3,10 +3,10 @@ import Link from "next/link";
 import "../globals.css";
 
 //SEO
-export const metadata = {
-  title: "Mijn Blog",
-  description: "Welkom op mijn blog",
-};
+// export const metadata = {
+//   title: "Mijn Blog",
+//   description: "Welkom op mijn blog",
+// };
 
 export default function SiteLayout({
   children,
