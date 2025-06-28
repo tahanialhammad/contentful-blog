@@ -13,16 +13,8 @@ async function getPostBySlug(slug: string) {
   return res.items[0];
 }
 
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-
-export default async function Page({ params }: Props) {
-  const { slug } = params;
-
-  const post = await getPostBySlug(slug);
+export default async function Page({ params }: { params: { slug: string } }) {
+  const post = await getPostBySlug(params.slug);
 
   if (!post) notFound();
 
