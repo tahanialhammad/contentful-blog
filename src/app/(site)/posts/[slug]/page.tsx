@@ -9,9 +9,9 @@ export async function generateStaticParams() {
   });
 
   return res.items.map((post) => ({
-    params: {
+    // params: {
       slug: post.fields.slug,
-    },
+    // },
   }));
 }
 
