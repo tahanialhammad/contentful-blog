@@ -1,54 +1,39 @@
-import { Post } from "@/lib/types/post";
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { Post } from "@/lib/types/post"; // import je type
 
-
-
-type Props = {
-  params: {
-    slug: string;
-  };
-};
-// export async function generateStaticParams() {
-//   const res = await client.getEntries<Post>({
-//     content_type: "blogPost",
-//   });
-
-//   return res.items.map((post) => ({
-//     // params: {
-//       slug: post.fields.slug,
-//     // },
-//   }));
-// }
-
-
-export default async function Page({ params }: Props) {
-  const { slug } = params;
-
+async function getPostBySlug(slug: string) {
   const res = await client.getEntries<Post>({
     content_type: "blogPost",
     "fields.slug": slug,
   });
 
-  const post = res.items[0];
+  if (!res.items.length) return null;
+  return res.items[0];
+}
 
-  if (!post) return notFound();
+export default async function Page({ params }: { params: { slug: string } }) {
+  const post = await getPostBySlug(params.slug);
 
-  const { title, publishDate, content, image } = post.fields;
+  if (!post) notFound();
+
+  const { title, publishDate, image, content } = post.fields;
 
   return (
-    <main className="max-w-3xl mx-auto px-4 py-10">
-      <h1 className="text-4xl font-bold mb-4">{title}</h1>
-      <p className="text-gray-500 mb-4">{publishDate}</p>
-      {image && (
+    <main>
+      <h1>{title}</h1>
+      <p>Gepubliceerd op: {new Date(publishDate).toLocaleDateString()}</p>
+
+      {image?.fields.file.url && (
         <img
-          src={`https:${image.fields.file.url}`}
+          src={"https:" + image.fields.file.url}
           alt={title}
-          className="w-full mb-6 rounded"
+          style={{ maxWidth: "600px", height: "auto" }}
         />
       )}
-      <div className="prose">{documentToReactComponents(content)}</div>
+
+      <div>{documentToReactComponents(content)}</div>
     </main>
   );
 }
