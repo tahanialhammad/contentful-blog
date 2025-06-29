@@ -21,7 +21,7 @@ export default async function BlogPage() {
           return (
             <li key={sys.id} className="border-b pb-6">
               <h2 className="text-2xl font-semibold">
-                <Link href={`/posts/${fields.slug}`}>{fields.title}</Link>
+               {fields.title}
               </h2>
               <p className="text-gray-500 mb-2">{fields.publishDate}</p>
 
@@ -34,12 +34,7 @@ export default async function BlogPage() {
               )}
 
               <p className="text-gray-700">{shortText}</p>
-              <Link
-                href={`/posts/${fields.slug}`}
-                className="text-blue-600 underline mt-2 inline-block"
-              >
-                Lees meer →
-              </Link>
+            
             </li>
           );
         })}
