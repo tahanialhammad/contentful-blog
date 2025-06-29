@@ -1,13 +1,12 @@
-import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
+import client from "@/lib/contentful";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Post } from '@/lib/types/post';
-import { Entry } from "contentful"; // ✅ belangrijk
+import { PostSkeleton } from "@/lib/types/post";
 
-export default async function PostPage({ params }) {
+export default async function PostPage({ params }: { params: { slug: string } }) {
   const { slug } = params;
 
-  const res = await client.getEntries<Entry<Post>>({ // ✅ gebruik Entry<Post>
+  const res = await client.getEntries<PostSkeleton>({
     content_type: "blogPost",
     "fields.slug": slug,
   });
@@ -15,14 +14,13 @@ export default async function PostPage({ params }) {
   const post = res.items[0];
 
   if (!post) {
-    notFound(); // 404 pagina
+    notFound();
   }
 
   const { title, publishDate, content, image } = post.fields;
 
   return (
     <article>
-      <h1>Show post page</h1>
       <h1>{title}</h1>
       <p className="text-gray-500 mb-4">{publishDate}</p>
 
