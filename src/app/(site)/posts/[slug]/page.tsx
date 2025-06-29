@@ -1,39 +1,37 @@
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
-import { Post } from "@/lib/types/post"; // import je type
 
-async function getPostBySlug(slug: string) {
-  const res = await client.getEntries<Post>({
+export default async function PostPage({ params }) {
+  const { slug } = params;
+
+  const res = await client.getEntries({
     content_type: "blogPost",
     "fields.slug": slug,
   });
 
-  if (!res.items.length) return null;
-  return res.items[0];
-}
+  const post = res.items[0];
 
-export default async function Page({ params }: { params: { slug: string } }) {
-  const post = await getPostBySlug(params.slug);
+  if (!post) {
+    notFound(); // 404 pagina
+  }
 
-  if (!post) notFound();
-
-  const { title, publishDate, image, content } = post.fields;
+  const { title, publishDate, content, image } = post.fields;
 
   return (
-    <main>
-      <h1>{title}</h1>
-      <p>Gepubliceerd op: {new Date(publishDate).toLocaleDateString()}</p>
+      <article>
+        <h1>Show post page</h1>
+        <h1>{title}</h1>
+        <p className="text-gray-500 mb-4">{publishDate}</p>
 
-      {image?.fields.file.url && (
-        <img
-          src={"https:" + image.fields.file.url}
-          alt={title}
-          style={{ maxWidth: "600px", height: "auto" }}
-        />
-      )}
-
-      <div>{documentToReactComponents(content)}</div>
-    </main>
+        {image && (
+          <img
+            src={`https:${image.fields.file.url}`}
+            alt={title}
+            className="w-full mb-6 rounded"
+          />
+        )}
+      <div className="prose">{documentToReactComponents(content)}</div>
+      </article>
   );
 }
