@@ -3,8 +3,13 @@ import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
 import Image from "next/image";
 
+type Props = {
+  params: {
+    slug: string;
+  };
+};
 
-export default async function PostPage({ params }) {
+export default async function PostPage({ params }: Props) {
   const { slug } = params;
 
   const res = await client.getEntries({
