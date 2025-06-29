@@ -1,11 +1,13 @@
 import client from "@/lib/contentful";
 import { notFound } from "next/navigation";
 import { documentToReactComponents } from "@contentful/rich-text-react-renderer";
+import { Post } from '@/lib/types/post';
+
 
 export default async function PostPage({ params }) {
   const { slug } = params;
 
-  const res = await client.getEntries({
+  const res = await client.getEntries<Post>({
     content_type: "blogPost",
     "fields.slug": slug,
   });
